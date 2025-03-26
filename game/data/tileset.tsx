@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.1" name="tileset" tilewidth="120" tileheight="120" tilecount="13" columns="0">
+<tileset version="1.10" tiledversion="1.11.1" name="tileset" tilewidth="120" tileheight="120" tilecount="14" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="9">
   <image source="../graphics/environment/Mitte ohne Rand unten.png" width="120" height="120"/>
@@ -32,12 +32,15 @@
   <image source="../graphics/environment/Ecke ohne rand unten.png" width="120" height="120"/>
  </tile>
  <tile id="19">
-  <image source="../../../../Downloads/gras.png" width="120" height="120"/>
+  <image source="../graphics/environment/gras.png" width="120" height="120"/>
  </tile>
  <tile id="20">
-  <image source="../../../../Downloads/gras_daisies.png" width="120" height="120"/>
+  <image source="../graphics/environment/gras_daisies.png" width="120" height="120"/>
  </tile>
  <tile id="21">
-  <image source="../../../../Downloads/gras_2.png" width="120" height="120"/>
+  <image source="../graphics/environment/gras_2.png" width="120" height="120"/>
+ </tile>
+ <tile id="22">
+  <image source="../graphics/environment/Wasserkante.png" width="120" height="120"/>
  </tile>
 </tileset>
