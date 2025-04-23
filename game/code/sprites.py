@@ -41,7 +41,7 @@ class Water(Generic):
 				pos = pos, 
 				surf = self.frames[self.frame_index], 
 				groups = groups, 
-				z = LAYERS['water']) 
+				z = LAYERS['water_animation']) 
 
 	def animate(self,dt):
 		self.frame_index += 5 * dt

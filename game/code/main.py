@@ -11,8 +11,10 @@ class Game:
 		self.clock = pygame.time.Clock()
 		self.level = Level()
 
+	"""
 	def toggle_menu(self):
 		self.menu_open = not self.menu_open
+	"""
 
 	def run(self):
 		while True:

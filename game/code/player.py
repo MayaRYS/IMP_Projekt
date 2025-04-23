@@ -8,14 +8,14 @@ class Player(pygame.sprite.Sprite):
 		super().__init__(group)
 
 		
-		#self.import_assets()
+		self.import_assets()
 		self.status = 'down_idle'
-		#self.frame_index = 0
+		self.frame_index = 0
 		
 
 		# general setup
-		#self.image = self.animations[self.status][self.frame_index]
-		self.image = pygame.image.load('../graphics/character/character_mushroom.png')
+		self.image = self.animations[self.status][self.frame_index]
+		#self.image = pygame.image.load('../graphics/character/character_mushroom.png')
 		self.rect = self.image.get_rect(center = pos)
 		self.z = LAYERS['main']
 
@@ -130,7 +130,7 @@ class Player(pygame.sprite.Sprite):
 				self.direction.x = 0
 
 			# tool use
-			if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+			if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) or (keys[pygame.K_SPACE]):
 				self.timers['tool use'].activate()
 				self.direction = pygame.math.Vector2()
 				self.frame_index = 0
@@ -223,4 +223,4 @@ class Player(pygame.sprite.Sprite):
 		self.get_target_pos()
 
 		self.move(dt)
-		#self.animate(dt)
+		self.animate(dt)

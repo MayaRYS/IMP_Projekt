@@ -119,6 +119,12 @@ class Level:
 			surf = pygame.image.load('../graphics/world/ground.png').convert_alpha(),
 			groups = self.all_sprites,
 			z = LAYERS['ground'])
+		
+		Generic(
+			pos = (0,0),
+			surf = pygame.image.load('../graphics/world/water.png').convert_alpha(),
+			groups = self.all_sprites,
+			z = LAYERS['water'])
 
 	def player_add(self,item):
 
