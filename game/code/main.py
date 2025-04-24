@@ -1,7 +1,9 @@
 import pygame, sys
 from settings import *
 from level import Level
-from menu_quit import Menu_Quit
+from menu_quit import *
+from startbildschirm import main_menu
+from timer import *
 
 class Game:
 	def __init__(self):
@@ -9,21 +11,37 @@ class Game:
 		self.screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 		pygame.display.set_caption('Sprout land')
 		self.clock = pygame.time.Clock()
-		self.level = Level()
+		self.level = Level(self.toggle_start)
+		self.main_menu = main_menu(self.toggle_start)
+		self.start_active = True
+	
+	def toggle_start(self):
+		self.start_active = not self.start_active
 
 	def toggle_menu(self):
 		self.menu_open = not self.menu_open
 
 	def run(self):
 		while True:
+
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					sys.exit()
-  
-			dt = self.clock.tick() / 1000
-			self.level.run(dt)
+
+			if self.start_active == True:
+				
+				self.main_menu.update()
+				# self.main_menu.draw()  
+				
+				
+
+			else:	
+				dt = self.clock.tick() / 1000
+				self.level.run(dt)
+
 			pygame.display.update()
+
 
 if __name__ == '__main__':
 	game = Game()
