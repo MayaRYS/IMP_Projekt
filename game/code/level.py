@@ -14,7 +14,7 @@ from menu_quit import Menu_Quit
 import time
 
 class Level:
-	def __init__(self):
+	def __init__(self, toggle_start):
 
 		# get the display surface
 		self.display_surface = pygame.display.get_surface()
@@ -42,7 +42,7 @@ class Level:
 
 		# quit
 
-		self.menu_quit = Menu_Quit(self.toggle_menu_quit)
+		self.menu_quit = Menu_Quit(self.toggle_menu_quit, toggle_start)
 		self.menu_quit_active = False
 
 		self.esc_pressed = False
