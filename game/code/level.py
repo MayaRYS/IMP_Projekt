@@ -70,7 +70,7 @@ class Level:
 		for x, y, surf in tmx_data.get_layer_by_name('Water').tiles():
 			Water((x * TILE_SIZE,y * TILE_SIZE), water_frames, self.all_sprites)
 		
-		
+		"""
 		# trees 
 		for obj in tmx_data.get_layer_by_name('Trees'):
 			Tree(
@@ -79,6 +79,7 @@ class Level:
 				groups = [self.all_sprites, self.collision_sprites, self.tree_sprites], 
 				name = obj.name,
 				player_add = self.player_add)
+		"""
 		
 		# wildflowers 
 		for obj in tmx_data.get_layer_by_name('Objects'):

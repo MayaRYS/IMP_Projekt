@@ -382,11 +382,9 @@
   <object id="639" gid="50" x="3091" y="220" width="288" height="360"/>
   <object id="640" gid="50" x="91" y="610" width="288" height="360"/>
   <object id="641" gid="50" x="3231" y="2615" width="288" height="360"/>
- </objectgroup>
- <objectgroup id="24" name="Trees">
-  <object id="630" name="Large" gid="50" x="336" y="2220" width="288" height="360"/>
-  <object id="631" name="Large" gid="49" x="3165" y="835" width="240" height="300"/>
-  <object id="632" name="Large" gid="49" x="3310" y="965" width="240" height="300"/>
+  <object id="630" gid="50" x="336" y="2220" width="288" height="360"/>
+  <object id="631" gid="49" x="3165" y="835" width="240" height="300"/>
+  <object id="632" gid="49" x="3310" y="965" width="240" height="300"/>
  </objectgroup>
  <objectgroup id="14" name="Schatten">
   <object id="115" gid="30" x="484" y="3007.03" width="593.455" height="588" rotation="90"/>
