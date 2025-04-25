@@ -6,7 +6,7 @@ class main_menu:
     def __init__ (self,toggle_menu):
         pygame.display.set_caption("Menu")
         self.background = pygame.image.load ('../graphics/startbildschirm/startbild2.png')
-        self.options = [Option('Quit', 390, 600, toggle_menu, quit_menu), Option('Play', 640, 600, toggle_menu, play_game), Option('Option', 890, 600, toggle_menu, None)]
+        self.options = [Option('Quit', 390, 600, toggle_menu, quit_menu), Option('Play', 640, 600, toggle_menu, play_game), Option('Options', 890, 600, toggle_menu, None)]
         self.toggle_menu = toggle_menu
         self.display_surface = pygame.display.get_surface()
 

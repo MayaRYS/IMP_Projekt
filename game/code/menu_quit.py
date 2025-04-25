@@ -34,7 +34,7 @@ class Option:
         self.font = pygame.font.Font('../font/LycheeSoda.ttf', 30)
 
         self.background = pygame.image.load('../graphics/menu/menu.png')
-        self.background = pygame.transform.scale(self.background, (110, 66))  
+        self.background = pygame.transform.scale(self.background, (120, 66))  
 
         self.text_surf = self.font.render(self.text, False, self.color)
         self.rect = self.text_surf.get_rect(center=(x, y))
@@ -45,7 +45,7 @@ class Option:
         self.y = y
 
     def draw(self):
-        self.display_surface.blit(self.background, (self.x-55, self.y-32))
+        self.display_surface.blit(self.background, (self.x-60, self.y-32))
 
         self.text_surf = self.font.render(self.text, False, self.color)
         self.display_surface.blit(self.text_surf, self.rect)

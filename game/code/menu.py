@@ -69,7 +69,7 @@ class Menu:
 				self.index += 1
 				self.timer.activate()
 
-			if keys[pygame.K_SPACE]:
+			if keys[pygame.K_RETURN]:
 				self.timer.activate()
 
 				# get item
