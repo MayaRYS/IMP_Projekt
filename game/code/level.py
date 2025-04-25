@@ -70,6 +70,7 @@ class Level:
 		for x, y, surf in tmx_data.get_layer_by_name('Water').tiles():
 			Water((x * TILE_SIZE,y * TILE_SIZE), water_frames, self.all_sprites)
 		
+		"""
 		# trees 
 		for obj in tmx_data.get_layer_by_name('Trees'):
 			Tree(
@@ -79,17 +80,11 @@ class Level:
 				name = obj.name,
 				player_add = self.player_add)
 			
+		"""
 		
 		# wildflowers 
 		for obj in tmx_data.get_layer_by_name('Objects'):
 			WildFlower((obj.x, obj.y), obj.image, [self.all_sprites, self.collision_sprites])
-		
-		"""
-		# collision tiles
-		for x, y, surf in tmx_data.get_layer_by_name('Collision').tiles():
-			Generic((x * TILE_SIZE, y * TILE_SIZE), pygame.Surface((TILE_SIZE, TILE_SIZE)), self.collision_sprites)
-
-		"""
 
 
 		for obj in tmx_data.get_layer_by_name('Collision'):
@@ -171,7 +166,7 @@ class Level:
 		keys = pygame.key.get_pressed()
 
 		# drawing logic
-		self.display_surface.fill('black')
+		self.display_surface.fill('#b8d43c')
 		self.all_sprites.custom_draw(self.player)
 		
 		# updates
