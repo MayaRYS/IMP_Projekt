@@ -38,9 +38,9 @@
   <image source="../graphics/environment/Ente.png" width="120" height="120"/>
  </tile>
  <tile id="15">
-  <image source="../graphics/environment/Prototyp Baum 2 fertig.png" width="24" height="30"/>
+  <image source="../graphics/environment/Baum 1 300x240.png" width="240" height="300"/>
  </tile>
  <tile id="16">
-  <image source="../graphics/environment/Prototyp Baum 1 fertig.png" width="24" height="30"/>
+  <image source="../graphics/environment/Prototyp Baum 2 fertig_scaled_12x_pngcrushed.png" width="288" height="360"/>
  </tile>
 </tileset>

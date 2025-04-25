@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="120" tileheight="120" infinite="0" nextlayerid="24" nextobjectid="630">
+<map version="1.10" tiledversion="1.11.1" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="120" tileheight="120" infinite="0" nextlayerid="25" nextobjectid="642">
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="28" source="wasser.tsx"/>
  <tileset firstgid="29" source="schatten.tsx"/>
  <tileset firstgid="33" source="interaction.tsx"/>
  <tileset firstgid="34" source="objects.tsx"/>
- <layer id="4" name="Water" width="30" height="30" visible="0">
+ <layer id="4" name="Water" width="30" height="30">
   <data encoding="csv">
 0,0,0,0,28,28,28,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,28,28,28,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -39,7 +39,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="21" name="Wasserspiegelung" visible="0">
+ <objectgroup id="21" name="Wasserspiegelung">
   <object id="137" gid="32" x="812" y="750.667" width="148" height="91"/>
   <object id="138" gid="32" x="932" y="871.333" width="148" height="91"/>
   <object id="139" gid="32" x="1052" y="991.333" width="148" height="91"/>
@@ -150,8 +150,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="8" name="Player">
-  <object id="10" name="Start" x="1747.03" y="666.667">
+ <objectgroup id="8" name="Player" visible="0">
+  <object id="10" name="Start" x="2024" y="1330">
    <point/>
   </object>
   <object id="619" name="Trader" x="2160" y="479" width="240" height="240"/>
@@ -373,6 +373,20 @@
   <object id="432" gid="14" x="1672" y="2084" width="120" height="120"/>
   <object id="618" name="Trader" gid="46" x="2205" y="631" width="150" height="150"/>
   <object id="621" gid="47" x="2916" y="1342.67" width="480" height="480"/>
+  <object id="633" gid="49" x="1285" y="195" width="240" height="300"/>
+  <object id="634" gid="49" x="1100" y="100" width="240" height="300"/>
+  <object id="635" gid="49" x="915" y="215" width="240" height="300"/>
+  <object id="636" gid="49" x="2090" y="95" width="240" height="300"/>
+  <object id="637" gid="49" x="2730" y="135" width="240" height="300"/>
+  <object id="638" gid="50" x="3301" y="155" width="288" height="360"/>
+  <object id="639" gid="50" x="3091" y="220" width="288" height="360"/>
+  <object id="640" gid="50" x="91" y="610" width="288" height="360"/>
+  <object id="641" gid="50" x="3231" y="2615" width="288" height="360"/>
+ </objectgroup>
+ <objectgroup id="24" name="Trees">
+  <object id="630" name="Large" gid="50" x="336" y="2220" width="288" height="360"/>
+  <object id="631" name="Large" gid="49" x="3165" y="835" width="240" height="300"/>
+  <object id="632" name="Large" gid="49" x="3310" y="965" width="240" height="300"/>
  </objectgroup>
  <objectgroup id="14" name="Schatten">
   <object id="115" gid="30" x="484" y="3007.03" width="593.455" height="588" rotation="90"/>
@@ -383,7 +397,7 @@
   <object id="134" gid="30" x="3235.27" y="2793" width="601.455" height="362" rotation="90"/>
   <object id="135" gid="30" x="2401.27" y="2895" width="613.455" height="839.333" rotation="90"/>
  </objectgroup>
- <objectgroup id="16" name="Collision">
+ <objectgroup id="16" name="Collision" visible="0">
   <object id="41" name="Collision" x="-2" y="2182" width="360" height="100"/>
   <object id="42" name="Collision" x="363.5" y="2178" width="25" height="220"/>
   <object id="43" name="Collision" x="366" y="2298" width="240" height="100"/>
@@ -396,20 +410,20 @@
   <object id="50" name="Collision" x="2504" y="2269.33" width="734.667" height="130"/>
   <object id="51" name="Collision" x="3212.83" y="2178" width="25" height="217.333"/>
   <object id="52" name="Collision" x="3219.33" y="2178" width="378.667" height="100"/>
-  <object id="90" name="Collision" x="1804.86" y="41.5909" width="975.997" height="107"/>
+  <object id="90" name="Collision" x="1553.34" y="132.5" width="1209.33" height="107"/>
   <object id="92" name="Collision" x="2763" y="249.333" width="240" height="110.667"/>
   <object id="93" name="Collision" x="3125" y="491.333" width="240" height="108"/>
   <object id="94" name="Collision" x="3004" y="374.333" width="124" height="106.667"/>
   <object id="95" name="Collision" x="3361" y="617" width="240" height="100"/>
-  <object id="96" name="Collision" x="1194.67" y="226" width="364" height="100"/>
-  <object id="97" name="Collision" x="840" y="338" width="357.334" height="108"/>
-  <object id="98" name="Collision" x="3.99967" y="335.334" width="604.001" height="108"/>
+  <object id="96" name="Collision" x="1194.67" y="259.333" width="364" height="100"/>
+  <object id="97" name="Collision" x="840" y="371.333" width="357.334" height="108"/>
+  <object id="98" name="Collision" x="3.99967" y="368.667" width="604.001" height="108"/>
   <object id="100" name="Collision" x="3350.17" y="490" width="25" height="228"/>
   <object id="101" name="Collision" x="3116.83" y="372.667" width="25" height="228"/>
   <object id="102" name="Collision" x="2754.17" y="132.667" width="25" height="228"/>
   <object id="103" name="Collision" x="2994.17" y="251.333" width="25" height="228"/>
-  <object id="104" name="Collision" x="1536.83" y="100.667" width="25" height="228"/>
-  <object id="105" name="Collision" x="1176.83" y="218" width="25" height="228"/>
+  <object id="104" name="Collision" x="1536.83" y="134" width="25" height="228"/>
+  <object id="105" name="Collision" x="1176.83" y="251.333" width="25" height="228"/>
   <object id="107" name="Collision" x="126" y="968" width="940" height="226"/>
   <object id="108" name="Collision" x="243" y="846" width="946" height="224"/>
   <object id="109" name="Collision" x="239" y="1190" width="712" height="124"/>
