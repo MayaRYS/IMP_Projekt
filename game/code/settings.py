@@ -38,16 +38,19 @@ APPLE_POS = {
 
 GROW_SPEED = {
 	'corn': 1,
-	'strawberry': 0.7
+	'strawberry': 0.7,
+	'carrot': 0.9
 }
 
 SALE_PRICES = {
 	'wood': 4,
 	'apple': 2,
 	'corn': 10,
-	'strawberry': 20
+	'strawberry': 20,
+	'carrot': 15
 }
 PURCHASE_PRICES = {
 	'corn': 4,
-	'strawberry': 5
+	'strawberry': 5,
+	'carrot': 5
 }
