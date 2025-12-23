@@ -4,7 +4,7 @@ from support import *
 from timer import Timer
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self, pos, group, collision_sprites, tree_sprites, interaction, soil_layer, toggle_shop):
+	def __init__(self, pos, group, collision_sprites, tree_sprites, interaction, soil_layer, toggle_shop, toggle_tent, toggle_position, tent_active, position_changed, toggle_transition):
 		super().__init__(group)
 
 		
@@ -67,6 +67,11 @@ class Player(pygame.sprite.Sprite):
 		self.sleep = False
 		self.soil_layer = soil_layer
 		self.toggle_shop = toggle_shop
+		self.toggle_tent = toggle_tent
+		self.position_changed = position_changed
+		self.toggle_position = toggle_position
+		self.tent_active = tent_active
+		self.toggle_transition = toggle_transition
 
 	def use_tool(self):
 		if self.selected_tool == 'hoe':
@@ -157,12 +162,25 @@ class Player(pygame.sprite.Sprite):
 				self.seed_index = self.seed_index if self.seed_index < len(self.seeds) else 0
 				self.selected_seed = self.seeds[self.seed_index]
 
+			collided_interaction_sprite = pygame.sprite.spritecollide(self,self.interaction,False)
+			if collided_interaction_sprite:
+				if collided_interaction_sprite[0].name == 'Exit'and self.tent_active:
+					self.toggle_tent()
+					self.tent_active = False
+					self.toggle_position()
+					self.toggle_transition()
+
 			if keys[pygame.K_RETURN]:
 				collided_interaction_sprite = pygame.sprite.spritecollide(self,self.interaction,False)
 				if collided_interaction_sprite:
 					if collided_interaction_sprite[0].name == 'Trader':
 						self.toggle_shop()
-					else:
+					if collided_interaction_sprite[0].name == 'Tent' and not self.tent_active:
+						self.toggle_tent()
+						self.toggle_position()
+						self.toggle_transition()
+						self.tent_active = True
+					if collided_interaction_sprite[0].name == 'Bed':
 						self.status = 'left_idle'
 						self.sleep = True
 
@@ -184,6 +202,7 @@ class Player(pygame.sprite.Sprite):
 		for sprite in self.collision_sprites.sprites():
 			if hasattr(sprite, 'hitbox'):
 				if sprite.hitbox.colliderect(self.hitbox):
+
 					if direction == 'horizontal':
 						if self.direction.x > 0: # moving right
 							self.hitbox.right = sprite.hitbox.left

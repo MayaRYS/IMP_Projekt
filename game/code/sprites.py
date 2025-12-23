@@ -10,18 +10,8 @@ class Generic(pygame.sprite.Sprite):
 		self.image = surf
 		self.rect = self.image.get_rect(topleft = pos)
 		self.z = z
-		self.hitbox = self.rect.copy()
-
-
-class Collision:
-    def __init__(self, pos, surf, z = LAYERS['main']):
-        self.image = surf  
-        self.rect = self.image.get_rect(topleft=pos)  
-        self.z = z  
-        self.width = self.rect.width
-        self.height = self.rect.height
-        self.hitbox = self.rect.copy()
-
+		self.hitbox = self.rect.inflate(30, -70)
+		#self.hitbox = self.rect.copy()
 
 class Interaction(Generic):
 	def __init__(self, pos, size, groups, name):

@@ -6,7 +6,7 @@ from timer import Timer
 class Menu_Quit:
     def __init__(self, toggle_menu_quit, toggle_menu):
         self.toggle_menu_quit = toggle_menu_quit
-        self.options = [Option('Quit', 60, 55, toggle_menu, self.quit_game)]
+        self.options = [Option('Quit', 80, 55, toggle_menu, self.quit_game)]
         self.timer = Timer(200)
         self.toggle_menu = toggle_menu
 

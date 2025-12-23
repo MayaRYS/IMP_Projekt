@@ -5,16 +5,21 @@ from overlay import Overlay
 from sprites import Generic, Water, WildFlower, Tree, Interaction, Particle
 from pytmx.util_pygame import load_pygame # type: ignore
 from support import *
-from transition import Transition
+from transition import *
 from soil import SoilLayer
 from sky import Rain, Sky
 from random import randint
 from menu import Menu
 from menu_quit import Menu_Quit
-import time
+
 
 class Level:
 	def __init__(self, toggle_start):
+		
+		#clock
+		self.clock = Clock(80, 55)
+		
+		self.first_setup = True
 
 		# get the display surface
 		self.display_surface = pygame.display.get_surface()
@@ -26,9 +31,20 @@ class Level:
 		self.interaction_sprites = pygame.sprite.Group()
 
 		self.soil_layer = SoilLayer(self.all_sprites, self.collision_sprites)
+
+		#tent
+		self.tent_active = False
+		self.position_changed = False
+		self.setup_tent = False
+		self.setup_outside = False
+		self.transition_plays = False
+		
 		self.setup()
-		self.overlay = Overlay(self.player)
+
+		self.transition_tent = TransitionTent(self.position_changed, self.toggle_setup_tent, self.transition_plays)
 		self.transition = Transition(self.reset, self.player)
+
+		self.overlay = Overlay(self.player)
 
 		# sky
 		self.rain = Rain(self.all_sprites)
@@ -47,9 +63,12 @@ class Level:
 
 		self.esc_pressed = False
 
-
 	def setup(self):
 		tmx_data = load_pygame('../data/map.tmx')
+
+		self.all_sprites.empty()
+		self.collision_sprites.empty()
+		self.interaction_sprites.empty()
 
 		"""
 		# house 
@@ -85,28 +104,58 @@ class Level:
 		for obj in tmx_data.get_layer_by_name('Objects'):
 			WildFlower((obj.x, obj.y), obj.image, [self.all_sprites, self.collision_sprites])
 
+		for x, y, surf in tmx_data.get_layer_by_name('Collision').tiles():
+			Generic((x * TILE_SIZE, y * TILE_SIZE), pygame.Surface((TILE_SIZE, TILE_SIZE)), self.collision_sprites)
 
-		for obj in tmx_data.get_layer_by_name('Collision'):
+		for obj in tmx_data.get_layer_by_name('CollisionObj'):
 			Generic((obj.x, obj.y), pygame.Surface((obj.width,obj.height)), self.collision_sprites)
 
 		# Player 
-		for obj in tmx_data.get_layer_by_name('Player'):
-			if obj.name == 'Start':
-				self.player = Player(
-					pos = (obj.x,obj.y), 
-					group = self.all_sprites, 
-					collision_sprites = self.collision_sprites,
-					tree_sprites = self.tree_sprites,
-					interaction = self.interaction_sprites,
-					soil_layer = self.soil_layer,
-					toggle_shop = self.toggle_shop)
 			
-			if obj.name == 'Bed':
-				Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
+		if self.first_setup:
+			for obj in tmx_data.get_layer_by_name('Player'):
+				if obj.name == "Start":
+					self.player = Player(
+							(obj.x,obj.y), 
+							self.all_sprites, 
+							self.collision_sprites,
+							self.tree_sprites,
+							self.interaction_sprites,
+							self.soil_layer,
+							self.toggle_shop,
+							self.toggle_tent,
+							self.toggle_position,
+							self.tent_active, self.position_changed, self.toggle_transition)
+				self.first_setup = False
+				self.setup_outside = False
+				
+				if obj.name == 'Tent':
+					Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
 
-			if obj.name == 'Trader':
-				Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
+				if obj.name == 'Trader':
+					Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
+		else:
+			for obj in tmx_data.get_layer_by_name('Player'):
+				if obj.name == "Start_exit_tent":
+					self.player = Player(
+							(obj.x,obj.y), 
+							self.all_sprites, 
+							self.collision_sprites,
+							self.tree_sprites,
+							self.interaction_sprites,
+							self.soil_layer,
+							self.toggle_shop,
+							self.toggle_tent,
+							self.toggle_position,
+							self.tent_active, self.position_changed, self.toggle_transition)
+					
+				self.setup_outside = False
+				
+				if obj.name == 'Tent':
+					Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
 
+				if obj.name == 'Trader':
+					Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
 
 		Generic(
 			pos = (0,0),
@@ -119,6 +168,75 @@ class Level:
 			surf = pygame.image.load('../graphics/world/water.png').convert_alpha(),
 			groups = self.all_sprites,
 			z = LAYERS['water'])
+		
+	def tent_setup(self):
+
+		self.all_sprites.empty()
+		self.collision_sprites.empty()
+		self.interaction_sprites.empty()
+
+		tmx_data = load_pygame('../data/tent.tmx')
+		
+
+		# wildflowers 
+		for obj in tmx_data.get_layer_by_name('Objects'):
+			WildFlower((obj.x, obj.y), obj.image, [self.all_sprites, self.collision_sprites])
+		
+		for x, y, surf in tmx_data.get_layer_by_name('Collision').tiles():
+			Generic(
+				((x * TILE_SIZE +10), (y * TILE_SIZE -70)),
+				surf,
+				self.collision_sprites              
+			)
+
+		for obj in tmx_data.get_layer_by_name('Player'):
+			if obj.name == 'Start':
+				self.player = Player(
+					(obj.x, obj.y),
+					self.all_sprites,
+					self.collision_sprites,
+					self.tree_sprites,
+					self.interaction_sprites,
+					self.soil_layer,
+					self.toggle_shop,
+					self.toggle_tent,
+					self.toggle_position,
+					self.tent_active, self.position_changed, self.toggle_transition)
+				
+				self.setup_tent = False
+			
+			if obj.name == 'Bed':
+					Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
+
+			if obj.name == 'Exit':
+					Interaction((obj.x,obj.y), (obj.width,obj.height), self.interaction_sprites, obj.name)
+			
+		Generic(
+			pos = (0,0),
+			surf = pygame.image.load('../graphics/world/tent.png').convert_alpha(),
+			groups = self.all_sprites,
+			z = LAYERS['ground'])
+		
+	def toggle_transition(self):
+		self.transition_plays = not self.transition_plays
+		self.set_transitions()
+
+	def set_transitions(self):
+		self.transition_tent = TransitionTent(self.position_changed, self.toggle_setup_tent, self.toggle_transition)
+		self.transition = Transition(self.reset, self.player)
+		self.transition_outside = TransitionOutside(self.toggle_setup_outside, self.toggle_transition)
+
+	def toggle_setup_tent(self):
+		self.setup_tent = not self.setup_tent
+
+	def toggle_setup_outside(self):
+		self.setup_outside = not self.setup_outside
+
+	def toggle_position(self):
+		self.position_changed = not self.position_changed
+
+	def toggle_tent(self):
+		self.tent_active = not self.tent_active
 
 	def player_add(self,item):
 
@@ -152,6 +270,9 @@ class Level:
 		# sky
 		self.sky.start_color = [255,255,255]
 
+		#time
+		self.clock = Clock(80, 55)
+
 	def plant_collision(self):
 		if self.soil_layer.plant_sprites:
 			for plant in self.soil_layer.plant_sprites.sprites():
@@ -162,37 +283,111 @@ class Level:
 					self.soil_layer.grid[plant.rect.centery // TILE_SIZE][plant.rect.centerx // TILE_SIZE].remove('P')
 
 	def run(self,dt):
+
 		keys = pygame.key.get_pressed()
 
-		# drawing logic
-		self.display_surface.fill('#b8d43c')
+		if self.setup_tent:
+			self.tent_setup()
+		elif self.setup_outside:
+			self.setup()
+
+		# hintergrund
+		if self.tent_active:
+			self.display_surface.fill('#000000')
+		elif not self.transition_plays:
+			self.display_surface.fill('#b8d43c')
+
 		self.all_sprites.custom_draw(self.player)
 		
-		# updates
-		
-		if keys[pygame.K_ESCAPE] and not self.esc_pressed:  
+		if keys[pygame.K_ESCAPE] and not self.esc_pressed:
 			self.toggle_menu_quit()
 			self.esc_pressed = True
-		if not keys[pygame.K_ESCAPE]:  
+		if not keys[pygame.K_ESCAPE]:
 			self.esc_pressed = False
+
+		
 		if self.menu_quit_active:
 			self.menu_quit.update()
+
 		elif self.shop_active:
 			self.menu.update()
 			self.esc_pressed = True
+
 		else:
 			self.all_sprites.update(dt)
+			self.clock.update(dt)
 			self.plant_collision()
 
-		# weather
+		
 		self.overlay.display()
-		if self.raining and not self.shop_active and not self.menu_quit_active:
-			self.rain.update()
-		self.sky.display(dt)
 
-		# transition overlay
-		if self.player.sleep:
-			self.transition.play()
+		if self.raining and not self.shop_active and not self.menu_quit_active and not self.tent_active:
+			self.rain.update()
+
+		self.sky.display(dt)
+		
+		if self.position_changed:
+			if self.tent_active: 
+				self.set_transitions()
+				self.position_changed = False
+			else:
+				self.set_transitions()
+				#self.setup()
+				self.position_changed = False
+
+		if self.transition_plays:
+			if self.tent_active:
+				self.transition_tent.play()
+			else:
+				self.transition_outside.play()
+		elif self.player.sleep:
+			self.transition.play()			
+
+class Clock:
+	def __init__(self, x, y):
+		self.hour = 14
+		self.minute = "00"
+		self.clock = 0
+		self.hour_full = True
+
+		self.text = f"{str(self.hour)}:{self.minute}"
+		self.color = 'Black'
+		self.font = pygame.font.Font('../font/LycheeSoda.ttf', 30)
+
+		self.background = pygame.image.load('../graphics/menu/menu.png')
+		self.background = pygame.transform.scale(self.background, (120, 66))  
+
+		self.text_surf = self.font.render(self.text, False, self.color)
+		self.rect = self.text_surf.get_rect(center=(x, y))
+		self.display_surface = pygame.display.get_surface()
+
+		self.x = x
+		self.y = y
+
+	def update(self, dt):
+		self.clock += 2 * dt
+
+		if (int(self.clock)/30) == 24:
+			self.clock = 0
+			self.hour = 0
+			self.minute = "00"
+			self.hour_full = True
+
+		if ((int(self.clock)/30)%2) == 1 and self.hour_full:
+			self.minute = "30"
+			self.hour_full = False
+		elif ((int(self.clock)/30)%2) == 0 and not self.hour_full:
+			self.hour +=1
+			self.minute = "00"
+			self.hour_full = True
+
+		self.draw()
+
+	def draw(self):
+		self.display_surface.blit(self.background, (self.x-60, self.y-32))
+		self.text = f"{str(self.hour)}:{self.minute}"
+		self.text_surf = self.font.render(self.text, False, self.color)
+		self.display_surface.blit(self.text_surf, self.rect)
 
 class CameraGroup(pygame.sprite.Group):
 	def __init__(self):

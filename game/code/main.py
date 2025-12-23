@@ -5,6 +5,7 @@ from menu_quit import *
 from startbildschirm import main_menu
 from timer import *
 
+
 class Game:
 	def __init__(self):
 		pygame.init()
@@ -34,6 +35,8 @@ class Game:
 				self.level.run(dt)
 				
 			pygame.display.update()
+
+
 
 if __name__ == '__main__':
 	game = Game()
