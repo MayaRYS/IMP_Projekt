@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.2" name="tent" tilewidth="240" tileheight="240" tilecount="19" columns="0">
+<tileset version="1.10" tiledversion="1.11.2" name="tent" tilewidth="240" tileheight="240" tilecount="21" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="20">
   <image source="../graphics/tent/tent_center.png" width="120" height="240"/>
@@ -57,5 +57,11 @@
  </tile>
  <tile id="38">
   <image source="../graphics/tent/sleeping_bag.png" width="240" height="120"/>
+ </tile>
+ <tile id="40">
+  <image source="../graphics/tent/pillow_big.png" width="120" height="120"/>
+ </tile>
+ <tile id="41">
+  <image source="../graphics/tent/pillow_small.png" width="90" height="90"/>
  </tile>
 </tileset>
